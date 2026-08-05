@@ -1,0 +1,113 @@
+name: update
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    # =====================
+    # 新闻更新
+    # 北京时间:
+    # 06:00
+    # 09:00
+    # 12:00
+    # 15:00
+    # 18:00
+    #
+    # UTC:
+    # 22:00
+    # 01:00
+    # 04:00
+    # 07:00
+    # 10:00
+    # =====================
+    - cron: "0 22 * * *"
+    - cron: "0 1 * * *"
+    - cron: "0 4 * * *"
+    - cron: "0 7 * * *"
+    - cron: "0 10 * * *"
+
+    # =====================
+    # 热搜与体育更新
+    # 北京时间:
+    # 每2小时
+    #
+    # UTC:
+    # 每2小时
+    # =====================
+    - cron: "30 0 * * *"
+    - cron: "30 2 * * *"
+    - cron: "30 4 * * *"
+    - cron: "30 6 * * *"
+    - cron: "30 8 * * *"
+    - cron: "30 10 * * *"
+    - cron: "30 12 * * *"
+    - cron: "30 14 * * *"
+    - cron: "30 16 * * *"
+    - cron: "30 18 * * *"
+    - cron: "30 20 * * *"
+    - cron: "30 22 * * *"
+
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r crawler/requirements.txt
+
+      - name: Run crawler
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          mkdir -p data
+          python crawler/main.py
+          python crawler/hot.py
+          python crawler/sports.py
+
+      - name: Copy data
+        run: |
+          cp data/articles.json website/articles.json
+          cp data/hot.json website/hot.json
+          cp data/sports.json website/sports.json
+
+      - name: Check output
+        run: |
+          echo "===== data ====="
+          ls -lh data
+          echo "===== website ====="
+          ls -lh website
+
+      # 🚀【终极修复】：commit --amend 合并提交，永不丢代码，永不膨胀！
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add data/articles.json
+          git add data/hot.json
+          git add data/sports.json
+          git add website/articles.json
+          git add website/hot.json
+          git add website/sports.json
+
+          if ! git diff --cached --quiet; then
+              # 把最新生成的数据直接“塞进”最新一次提交中。哪怕你手动修改过代码，它也不会删掉，只会融合进去
+              git commit --amend --no-edit || git commit -m "update news, hot and sports"
+              
+              # 使用 --force-with-lease 更优雅地强制推送到远程，杜绝丢代码的可能
+              git push --force-with-lease
+          else
+              echo "No changes to commit"
+          fi
