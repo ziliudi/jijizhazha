@@ -1,0 +1,88 @@
+name: update
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    # =====================
+    # 新闻更新（不变，每天 5 次）
+    # 北京时间: 06:00, 09:00, 12:00, 15:00, 18:00
+    # UTC:      22:00, 01:00, 04:00, 07:00, 10:00
+    # =====================
+    - cron: "0 22 * * *"
+    - cron: "0 1 * * *"
+    - cron: "0 4 * * *"
+    - cron: "0 7 * * *"
+    - cron: "0 10 * * *"
+
+    # =====================
+    # 热搜与体育更新（每天 5 次，都在北京时间 8:30–23:30）
+    # UTC:  00:30, 04:30, 08:30, 12:30, 15:30
+    # 北京: 08:30, 12:30, 16:30, 20:30, 23:30
+    # =====================
+    - cron: "30 0 * * *"    # 北京 08:30
+    - cron: "30 4 * * *"    # 北京 12:30
+    - cron: "30 8 * * *"    # 北京 16:30
+    - cron: "30 12 * * *"   # 北京 20:30
+    - cron: "30 15 * * *"   # 北京 23:30
+
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install -r crawler/requirements.txt
+
+      - name: Run crawler
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          mkdir -p data
+          python crawler/main.py
+          python crawler/hot.py
+          python crawler/sports.py
+
+      - name: Copy data
+        run: |
+          cp data/articles.json website/articles.json
+          cp data/hot.json website/hot.json
+          cp data/sports.json website/sports.json
+
+      - name: Check output
+        run: |
+          echo "===== data ====="
+          ls -lh data
+          echo "===== website ====="
+          ls -lh website
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add data/articles.json
+          git add data/hot.json
+          git add data/sports.json
+          git add website/articles.json
+          git add website/hot.json
+          git add website/sports.json
+
+          if ! git diff --cached --quiet; then
+              git commit --amend --no-edit || git commit -m "update news, hot and sports"
+              git push --force-with-lease
+          else
+              echo "No changes to commit"
+          fi
