@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>叽叽喳喳</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- 设置浏览器标签页图标 -->
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+
+</head>
+
+<body>
+
+    <header>
+        <img src="logo.svg" alt="叽叽喳喳 Logo" class="site-logo">
+
+        <div class="site-title">
+            <h1>叽叽喳喳</h1>
+            <p>全球新闻 RSS 聚合</p>
+        </div>
+    </header>
+
+    <nav>
+        <button onclick="filterNews('全部')">全部</button>
+        <button onclick="filterNews('中国')">中国</button>
+        <button onclick="filterNews('国际')">国际</button>
+        <a href="hot.html" class="nav-btn">🔥 热搜</a>
+        <a href="sports.html" class="nav-btn">⚽ 体育</a>
+        <a href="about.html" class="nav-btn">关于</a>
+    </nav>
+
+    <main id="news">
+        正在加载新闻...
+    </main>
+
+    <footer id="footer"></footer>
+
+    <script src="app.js"></script>
+
+    <script>
+        const year = new Date().getFullYear();
+
+        let text =
+            year === 2026
+                ? "Copyright © 2026"
+                : "Copyright © 2026-" + year;
+
+        document.getElementById("footer").innerHTML =
+            text +
+            " 叽叽喳喳版权所有.<br>" +
+            "感谢 " +
+            '<a href="https://buzzing.cc" target="_blank">buzzing.cc</a>' +
+            " 和 " +
+            '<a href="https://top.open2hub.com/" target="_blank">极简热榜</a>' +
+            " 提供数据支持。";
+    </script>
+
+</body>
+
+</html>
