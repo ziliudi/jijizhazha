@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 512 512"
+     width="512"
+     height="512">
+
+  <!-- bird main silhouette -->
+  <path fill="#000"
+    d="
+    M72 385
+    C125 350 185 290 240 225
+    C270 190 300 155 345 150
+    C365 148 382 153 398 160
+    L475 178
+    L408 200
+    C410 245 400 300 365 335
+    C330 370 270 385 205 380
+    C155 378 110 390 72 385
+    Z"/>
+
+
+  <!-- tail extension -->
+  <path fill="#000"
+    d="
+    M120 360
+    C85 390 50 420 25 445
+    C75 440 125 420 170 380
+    Z"/>
+
+
+  <!-- wing inner curve (transparent cut style) -->
+  <path fill="none"
+        stroke="#fff"
+        stroke-width="8"
+        stroke-linecap="round"
+        d="
+        M120 355
+        C190 350 290 320 355 250"/>
+
+
+  <!-- legs -->
+  <path fill="#000"
+    d="
+    M270 375
+    L285 435
+    L300 435
+    L295 375
+    Z"/>
+
+  <path fill="#000"
+    d="
+    M320 370
+    L340 435
+    L355 435
+    L340 365
+    Z"/>
+
+
+  <!-- feet -->
+  <path fill="#000"
+    d="
+    M270 435
+    L235 445
+    L235 452
+    L320 452
+    L320 445
+    Z"/>
+
+  <path fill="#000"
+    d="
+    M335 435
+    L305 445
+    L305 452
+    L395 452
+    L395 445
+    Z"/>
+
+
+  <!-- eye -->
+  <circle cx="360" cy="180" r="7" fill="#fff"/>
+
+</svg>
