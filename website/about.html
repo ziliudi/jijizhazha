@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>关于本站 - 叽叽喳喳</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <img src="logo.svg" alt="叽叽喳喳 Logo" class="site-logo">
+
+
+    <div class="site-title">
+
+        <h1>叽叽喳喳</h1>
+
+        <p>全球新闻 RSS 聚合</p>
+
+    </div>
+
+
+</header>
+
+
+
+
+<nav>
+
+    <a href="index.html" class="nav-btn">📰 新闻</a>
+
+    <a href="hot.html" class="nav-btn">🔥 热搜</a>
+
+    <a href="sports.html" class="nav-btn">⚽ 体育</a>
+
+    <a href="about.html" class="nav-btn">ℹ️ 关于本站</a>
+
+
+</nav>
+
+
+
+
+
+<main class="about">
+
+
+    <h2>关于本站</h2>
+
+
+    <p>
+        叽叽喳喳是一个基于公开 RSS 数据源的新闻聚合阅读工具。
+    </p>
+
+
+    <p>
+        本站旨在帮助用户更加方便地浏览来自不同来源的新闻资讯，
+        将多个公开信息源整理展示在同一个页面中。
+    </p>
+
+
+    <p>
+        感谢所有提供公开数据服务的平台和信息来源。
+    </p>
+
+
+
+    <h3>数据来源说明</h3>
+
+
+    <p>
+        本站展示的新闻数据均来自第三方公开 RSS 信息源，
+        包括新闻媒体及其他公开资讯来源。
+    </p>
+
+
+    <p>
+        本站本身不生产新闻内容，
+        不代表任何新闻机构的观点或立场。
+    </p>
+
+
+
+
+    <h3>版权与内容说明</h3>
+
+
+    <p>
+        新闻标题、摘要、图片及相关内容版权归原发布机构及相关权利人所有。
+    </p>
+
+
+    <p>
+        本站主要进行 RSS 数据整理、分类展示和阅读界面优化，
+        不储存新闻原文，也不会对原始新闻内容进行修改。
+    </p>
+
+
+    <p>
+        用户可通过新闻链接访问原始来源页面查看完整内容。
+    </p>
+
+
+
+
+    <h3>数据限制</h3>
+
+
+    <p>
+        由于本站依赖第三方 RSS 数据源，
+        部分内容可能存在更新延迟、图片缺失或格式变化等情况。
+    </p>
+
+
+    <p>
+        本站无法保证第三方数据源始终完整、准确或持续可用。
+    </p>
+
+
+
+
+    <h3>反馈与建议</h3>
+
+    <div class="feedback-form">
+
+        <iframe
+            src="https://tally.so/embed/aQXqVb?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+            width="100%"
+            height="600"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+            title="叽叽喳喳反馈表">
+        </iframe>
+
+    </div>
+
+
+
+</main>
+
+
+
+
+
+<footer id="footer"></footer>
+
+
+
+
+<script>
+
+
+const year = new Date().getFullYear();
+
+
+let text =
+    year === 2026
+        ? "Copyright © 2026"
+        : "Copyright © 2026-" + year;
+
+
+
+document.getElementById("footer").innerHTML =
+
+    text +
+
+    " 叽叽喳喳版权所有.<br>" +
+
+    "感谢 " +
+
+    '<a href="https://buzzing.cc" target="_blank">buzzing.cc</a>' +
+
+    " 和 " +
+
+    '<a href="https://top.open2hub.com/" target="_blank">极简热榜</a>' +
+
+    " 提供数据支持。";
+
+
+</script>
+
+
+
+</body>
+
+
+</html>
